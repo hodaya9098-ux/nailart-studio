@@ -277,122 +277,101 @@ header {
 
 .chosen-cta:hover { transform: translateY(-1px); }
 
-/* ===== NAIL PREVIEW ===== */
-.nail-preview {
+/* ===== NAIL CARD VISUALS ===== */
+.card-img {
+  width: 100%;
+  height: 120px;
+  overflow: hidden;
+}
+
+.card-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s;
+}
+
+.style-card-new:hover .card-img img { transform: scale(1.08); }
+
+.card-nail-bg {
+  width: 100%;
+  height: 120px;
   display: flex;
-  gap: 5px;
+  align-items: center;
   justify-content: center;
-  align-items: flex-end;
-  padding: 16px 10px 12px;
-  background: linear-gradient(to bottom, #f7f7f7, #fff);
-  min-height: 72px;
 }
 
-.nail {
-  width: 18px;
-  height: 30px;
-  border-radius: 50% 50% 5px 5px / 40% 40% 5px 5px;
-  border: 1px solid rgba(0,0,0,0.07);
-  flex-shrink: 0;
+/* Large single nail shape */
+.nail-single {
+  width: 52px;
+  height: 86px;
+  border-radius: 50% 50% 10px 10px / 40% 40% 10px 10px;
+  border: 1.5px solid rgba(0,0,0,0.08);
 }
 
-.nail.tall  { height: 36px; }
-.nail.short { height: 24px; width: 15px; }
-
-/* ===== NAIL COLORS ===== */
-
-/* Classic */
-.nail.french {
-  background: linear-gradient(to bottom, #fff 0%, #fff 28%, #f0d9c0 28%);
-  border-color: rgba(0,0,0,0.1);
-}
-.nail.red      { background: #cc2200; }
-.nail.nude     { background: linear-gradient(to bottom, #e8c5a0, #d4aa7d); }
-.nail.black    { background: #222; }
-.nail.burgundy { background: #6b1c2e; }
-.nail.white    { background: #f8f8f8; border-color: #ccc; }
-
-/* Pastel */
-.nail.baby-pink  { background: #ffb3c6; }
-.nail.baby-blue  { background: #a8d8ea; }
-.nail.lavender   { background: #c3b1e1; }
-.nail.mint       { background: #a8e6cf; }
-.nail.peach      { background: #ffcba4; }
-.nail.lilac      { background: #d8b4fe; }
-.nail.coral      { background: #ff8c69; }
-.nail.rose-taupe { background: #c4a0a0; }
-
-/* Ombre */
-.nail.sunset   { background: linear-gradient(to top, #f5576c, #f093fb, #fda085); }
-.nail.ocean    { background: linear-gradient(to top, #006994, #00b4d8, #90e0ef); }
-.nail.rose-gold{ background: linear-gradient(to top, #c8860a, #f7bb97, #dd5e89); }
-.nail.berry    { background: linear-gradient(to top, #9733ee, #da22ff, #ff6b6b); }
-
-/* Rainbow - each nail different */
-.nail.r1 { background: #ff6b6b; }
-.nail.r2 { background: #ffd93d; }
-.nail.r3 { background: #6bcb77; }
-.nail.r4 { background: #4d96ff; }
-.nail.r5 { background: #c77dff; }
-
-/* Special */
-.nail.marble {
+/* Special nail textures */
+.nail-marble {
   background:
-    linear-gradient(125deg, transparent 30%, rgba(160,160,160,0.45) 31%, rgba(160,160,160,0.45) 32%, transparent 32%),
-    linear-gradient(75deg, transparent 45%, rgba(130,130,130,0.3) 46%, rgba(130,130,130,0.3) 47%, transparent 47%),
+    linear-gradient(128deg, transparent 28%, rgba(150,150,150,0.5) 29%, rgba(150,150,150,0.5) 31%, transparent 31%),
+    linear-gradient(72deg,  transparent 42%, rgba(120,120,120,0.35) 43%, rgba(120,120,120,0.35) 45%, transparent 45%),
+    linear-gradient(155deg, transparent 55%, rgba(160,160,160,0.4) 56%, rgba(160,160,160,0.4) 57%, transparent 57%),
     #f0ede8;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.12);
 }
 
-.nail.gold {
-  background: linear-gradient(135deg, #f5d020 0%, #c8860a 30%, #ffd700 55%, #f5d020 80%, #c8860a 100%);
-}
-
-.nail.holo {
+.nail-holo {
   background: linear-gradient(135deg,
     #ff0080 0%, #ff8c00 14%, #ffff00 28%,
     #00e676 42%, #00bfff 57%, #651fff 71%,
     #ff0080 85%, #ff8c00 100%);
+  box-shadow: 0 4px 18px rgba(100,50,255,0.45);
 }
 
-.nail.glitter {
+.nail-glitter {
   background:
-    radial-gradient(circle at 30% 30%, rgba(255,255,255,0.9) 1px, transparent 2px),
-    radial-gradient(circle at 70% 60%, rgba(255,255,255,0.7) 1px, transparent 2px),
-    radial-gradient(circle at 50% 80%, rgba(255,255,255,0.8) 1px, transparent 2px),
-    radial-gradient(circle at 20% 70%, rgba(255,255,255,0.6) 1px, transparent 2px),
-    radial-gradient(circle at 80% 20%, rgba(255,255,255,0.9) 1px, transparent 2px),
+    radial-gradient(circle at 25% 25%, rgba(255,255,255,0.95) 1.5px, transparent 2px),
+    radial-gradient(circle at 72% 55%, rgba(255,255,255,0.85) 1.5px, transparent 2px),
+    radial-gradient(circle at 45% 78%, rgba(255,255,255,0.9)  1.5px, transparent 2px),
+    radial-gradient(circle at 18% 65%, rgba(255,255,255,0.7)  1.5px, transparent 2px),
+    radial-gradient(circle at 80% 18%, rgba(255,255,255,0.95) 1.5px, transparent 2px),
+    radial-gradient(circle at 60% 40%, rgba(255,255,255,0.8)  1.5px, transparent 2px),
+    radial-gradient(circle at 35% 50%, rgba(255,255,255,0.6)  1px,   transparent 2px),
     linear-gradient(135deg, #ff9a9e, #fecfef, #ff9a9e);
+  box-shadow: 0 4px 16px rgba(255,143,171,0.5);
 }
 
-.nail.galaxy {
+.nail-galaxy {
   background:
-    radial-gradient(circle at 25% 25%, rgba(255,255,255,0.9) 1px, transparent 2px),
-    radial-gradient(circle at 70% 45%, rgba(255,255,255,0.7) 1px, transparent 2px),
-    radial-gradient(circle at 45% 75%, rgba(255,255,255,0.8) 1px, transparent 2px),
-    radial-gradient(circle at 80% 15%, rgba(255,255,255,0.9) 1.5px, transparent 2px),
-    radial-gradient(circle at 15% 60%, rgba(200,150,255,0.6) 1px, transparent 2px),
-    linear-gradient(135deg, #1a0533, #4a0e8f, #1a0533);
+    radial-gradient(circle at 22% 20%, rgba(255,255,255,0.95) 1.5px, transparent 2.5px),
+    radial-gradient(circle at 68% 42%, rgba(255,255,255,0.85) 1.5px, transparent 2.5px),
+    radial-gradient(circle at 40% 72%, rgba(255,255,255,0.9)  1px,   transparent 2px),
+    radial-gradient(circle at 78% 14%, rgba(255,255,255,0.95) 2px,   transparent 3px),
+    radial-gradient(circle at 12% 58%, rgba(200,150,255,0.8)  1.5px, transparent 2.5px),
+    radial-gradient(circle at 55% 30%, rgba(150,200,255,0.7)  1px,   transparent 2px),
+    radial-gradient(circle at 88% 70%, rgba(255,180,255,0.8)  1.5px, transparent 2px),
+    linear-gradient(135deg, #0d0221, #4a0e8f, #1a0533);
+  box-shadow: 0 4px 18px rgba(74,14,143,0.5);
 }
 
-.nail.leopard {
+.nail-leopard {
   background-color: #c8a055;
   background-image:
-    radial-gradient(ellipse 5px 4px at 25% 30%, rgba(40,20,0,0.8) 60%, transparent 61%),
-    radial-gradient(ellipse 4px 5px at 70% 65%, rgba(40,20,0,0.7) 55%, transparent 56%),
-    radial-gradient(ellipse 4px 3px at 50% 15%, rgba(40,20,0,0.75) 60%, transparent 61%),
-    radial-gradient(ellipse 3px 4px at 15% 75%, rgba(40,20,0,0.6) 55%, transparent 56%);
+    radial-gradient(ellipse 7px 5px  at 25% 22%, rgba(40,20,0,0.85) 58%, transparent 59%),
+    radial-gradient(ellipse 6px 7px  at 68% 60%, rgba(40,20,0,0.8)  55%, transparent 56%),
+    radial-gradient(ellipse 6px 5px  at 48% 12%, rgba(40,20,0,0.8)  60%, transparent 61%),
+    radial-gradient(ellipse 5px 6px  at 15% 72%, rgba(40,20,0,0.75) 55%, transparent 56%),
+    radial-gradient(ellipse 7px 5px  at 80% 35%, rgba(40,20,0,0.8)  55%, transparent 56%),
+    radial-gradient(ellipse 5px 4px  at 55% 80%, rgba(40,20,0,0.7)  58%, transparent 59%);
+  box-shadow: 0 4px 14px rgba(100,70,0,0.3);
 }
 
-.nail.silver {
-  background: linear-gradient(135deg, #e0e0e0 0%, #888 30%, #ddd 55%, #aaa 80%, #e8e8e8 100%);
-}
-
-.nail.geo {
-  background: #fff;
+.nail-geo {
+  background: #fff8f8;
   background-image:
-    linear-gradient(to bottom, transparent 45%, #222 45%, #222 50%, transparent 50%),
-    linear-gradient(to right, transparent 45%, #ff8fab 45%, #ff8fab 50%, transparent 50%);
+    linear-gradient(to bottom, transparent 42%, #e75480 42%, #e75480 48%, transparent 48%),
+    linear-gradient(to right,  transparent 42%, #333    42%, #333    47%, transparent 47%);
   border-color: #ddd;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
 }
 
 /* ===== PORTFOLIO PAGE ===== */
