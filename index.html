@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="NailArt Studio - עיצוב ציפורניים מקצועי. בחרי סגנון, חשבי מחיר וקבעי תור בקלות.">
+  <meta name="description" content="NailArt Studio - עיצוב ציפורניים מקצועי">
   <title>NailArt Studio</title>
   <link rel="stylesheet" href="style.css">
   <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;600;700&display=swap" rel="stylesheet">
@@ -11,51 +11,85 @@
 <body>
 
   <nav class="navbar">
-    <div class="nav-logo">💅 NailArt Studio</div>
+    <div class="nav-logo" id="navLogo">💅 NailArt Studio</div>
     <ul class="nav-links">
-      <li><a href="#gallery">סגנונות</a></li>
-      <li><a href="#portfolio">גלריה</a></li>
-      <li><a href="#priceCalc">מחיר</a></li>
-      <li><a href="#booking">תור</a></li>
+      <li><a href="#" onclick="showPage('home')" data-page="home">בית</a></li>
+      <li><a href="#" onclick="showPage('styles')" data-page="styles">סגנונות</a></li>
+      <li><a href="#" onclick="showPage('portfolio')" data-page="portfolio">גלריה</a></li>
+      <li><a href="#" onclick="showPage('price')" data-page="price">מחיר</a></li>
+      <li><a href="#" onclick="showPage('booking')" data-page="booking">קביעת תור</a></li>
     </ul>
     <button class="nav-toggle" onclick="toggleMenu()">☰</button>
   </nav>
 
-  <header>
-    <div class="header-content">
-      <h1>NailArt Studio</h1>
-      <p>בחרי את העיצוב שלך, קבעי תור ותהני מהמניקור המושלם!</p>
-      <a href="#gallery" class="cta-btn">התחילי עכשיו</a>
-    </div>
-  </header>
-
   <main>
 
-    <!-- בחירת סגנון -->
-    <section id="gallery">
-      <h2>בחרי סגנון</h2>
-      <p class="section-subtitle">לחצי על הסגנון שאת אוהבת</p>
+    <!-- ===== עמוד בית ===== -->
+    <div id="page-home" class="page active">
+      <header>
+        <div class="header-content">
+          <h1>NailArt Studio</h1>
+          <p>עיצוב ציפורניים מקצועי ומפנק</p>
+          <div class="hero-buttons">
+            <button onclick="showPage('styles')">בחרי סגנון</button>
+            <button class="btn-outline" onclick="showPage('booking')">קבעי תור</button>
+          </div>
+        </div>
+      </header>
+      <div class="home-cards">
+        <div class="home-card" onclick="showPage('styles')">
+          <div class="home-card-icon">💅</div>
+          <h3>סגנונות</h3>
+          <p>בחרי את עיצוב הציפורניים שלך</p>
+        </div>
+        <div class="home-card" onclick="showPage('portfolio')">
+          <div class="home-card-icon">🖼️</div>
+          <h3>גלריה</h3>
+          <p>ראי את עבודות הסטודיו שלנו</p>
+        </div>
+        <div class="home-card" onclick="showPage('price')">
+          <div class="home-card-icon">💰</div>
+          <h3>מחיר</h3>
+          <p>חשבי את עלות הטיפול</p>
+        </div>
+        <div class="home-card" onclick="showPage('booking')">
+          <div class="home-card-icon">📅</div>
+          <h3>קביעת תור</h3>
+          <p>בחרי יום ושעה פנויה</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== עמוד סגנונות ===== -->
+    <div id="page-styles" class="page">
+      <div class="page-header">
+        <h2>סגנונות ציפורניים</h2>
+        <p class="section-subtitle">לחצי על הסגנון שאת אוהבת</p>
+      </div>
       <div class="styles-grid">
-        <div class="style-card" onclick="selectStyle('French')">
+        <div class="style-card" onclick="selectStyle('French', this)">
           <img src="french.png" alt="French Style">
           <p>French</p>
         </div>
-        <div class="style-card" onclick="selectStyle('Glitter')">
+        <div class="style-card" onclick="selectStyle('Glitter', this)">
           <img src="glitter.png" alt="Glitter Style">
           <p>Glitter</p>
         </div>
-        <div class="style-card" onclick="selectStyle('Colorful')">
+        <div class="style-card" onclick="selectStyle('Colorful', this)">
           <img src="colorful.png" alt="Colorful Style">
           <p>Colorful</p>
         </div>
       </div>
-      <p id="chosenStyle" class="chosen-style">עדיין לא נבחר סגנון</p>
-    </section>
+      <p id="chosenStyle" class="chosen-style"></p>
+      <button class="page-action-btn" onclick="showPage('booking')">קבעי תור עם הסגנון הנבחר ←</button>
+    </div>
 
-    <!-- גלריית עבודות -->
-    <section id="portfolio">
-      <h2>גלריית עבודות</h2>
-      <p class="section-subtitle">חלק מהעבודות שלנו</p>
+    <!-- ===== עמוד גלריה ===== -->
+    <div id="page-portfolio" class="page">
+      <div class="page-header">
+        <h2>גלריית עבודות</h2>
+        <p class="section-subtitle">חלק מהעבודות שלנו</p>
+      </div>
       <div class="portfolio-grid">
         <div class="work-card">
           <img src="design1.png" alt="עיצוב 1">
@@ -70,12 +104,14 @@
           <p>עיצוב צבעוני</p>
         </div>
       </div>
-    </section>
+    </div>
 
-    <!-- מחשבון מחיר -->
-    <section id="priceCalc">
-      <h2>מחשבון מחיר</h2>
-      <p class="section-subtitle">בחרי טיפול וראי את המחיר המשוער</p>
+    <!-- ===== עמוד מחיר ===== -->
+    <div id="page-price" class="page">
+      <div class="page-header">
+        <h2>מחשבון מחיר</h2>
+        <p class="section-subtitle">בחרי טיפול וראי את המחיר המשוער</p>
+      </div>
       <div class="price-calc-box">
         <label for="serviceType">בחרי סוג טיפול:</label>
         <select id="serviceType">
@@ -86,13 +122,16 @@
         </select>
         <button onclick="calcPrice()">חשבי מחיר</button>
         <p id="result" class="price-result"></p>
+        <button class="btn-outline" onclick="showPage('booking')">קבעי תור ←</button>
       </div>
-    </section>
+    </div>
 
-    <!-- קביעת תור עם יומן -->
-    <section id="booking">
-      <h2>קביעת תור</h2>
-      <p class="section-subtitle">בחרי תאריך ושעה פנויה</p>
+    <!-- ===== עמוד קביעת תור ===== -->
+    <div id="page-booking" class="page">
+      <div class="page-header">
+        <h2>קביעת תור</h2>
+        <p class="section-subtitle">בחרי תאריך ושעה פנויה</p>
+      </div>
 
       <!-- שלב 1: יומן -->
       <div id="step1" class="booking-step">
@@ -101,13 +140,18 @@
           <span id="calMonthLabel"></span>
           <button class="cal-nav" onclick="changeMonth(1)">&#8249;</button>
         </div>
+        <div class="calendar-legend">
+          <span class="legend-item"><span class="legend-dot available"></span> פנוי</span>
+          <span class="legend-item"><span class="legend-dot unavailable"></span> סגור</span>
+          <span class="legend-item"><span class="legend-dot full"></span> מלא</span>
+        </div>
         <div class="calendar-weekdays">
           <span>א</span><span>ב</span><span>ג</span><span>ד</span><span>ה</span><span>ו</span><span>ש</span>
         </div>
         <div class="calendar-grid" id="calendarGrid"></div>
       </div>
 
-      <!-- שלב 2: בחירת שעה -->
+      <!-- שלב 2: שעות -->
       <div id="step2" class="booking-step hidden">
         <h3 id="selectedDateLabel"></h3>
         <p class="section-subtitle">בחרי שעה פנויה</p>
@@ -141,14 +185,53 @@
         <button class="back-btn" onclick="goToStep(2)">← חזרה לשעות</button>
         <div id="confirmMsg" class="confirm-msg"></div>
       </div>
-    </section>
+    </div>
+
+    <!-- ===== עמוד אדמין (מוסתר) ===== -->
+    <div id="page-admin" class="page">
+      <div class="page-header">
+        <h2>🔧 פאנל ניהול</h2>
+        <p class="section-subtitle">ניהול זמינות המטפלת</p>
+      </div>
+
+      <div id="adminLogin" class="admin-box">
+        <h3>כניסה למנהל</h3>
+        <input type="password" id="adminPass" placeholder="סיסמה">
+        <button onclick="adminLogin()">כניסה</button>
+        <p id="adminError" class="confirm-msg error"></p>
+      </div>
+
+      <div id="adminPanel" class="hidden">
+        <div class="admin-section">
+          <h3>ימי עבודה שבועיים</h3>
+          <div class="working-days-grid" id="workingDaysGrid"></div>
+          <button onclick="saveWorkingDays()">שמרי ימי עבודה</button>
+        </div>
+
+        <div class="admin-section">
+          <h3>חסימת תאריך ספציפי</h3>
+          <div class="admin-row">
+            <input type="date" id="blockDateInput">
+            <button onclick="blockDate()">חסמי תאריך</button>
+          </div>
+          <div id="blockedList" class="blocked-list"></div>
+        </div>
+
+        <div class="admin-section">
+          <h3>תורים שנקבעו</h3>
+          <div id="appointmentsList" class="appointments-list"></div>
+        </div>
+
+        <button class="back-btn" onclick="adminLogout()">התנתקי</button>
+      </div>
+    </div>
 
   </main>
 
   <footer>
     <div class="footer-content">
       <p>💅 NailArt Studio &copy; 2025</p>
-      <p>עיצוב ציפורניים מקצועי | יצירת קשר: nailart@example.com</p>
+      <p>עיצוב ציפורניים מקצועי | nailart@example.com</p>
     </div>
   </footer>
 
