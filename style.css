@@ -77,7 +77,8 @@ body {
   max-width: 82vw;
   display: block;
   margin: 0 auto 24px;
-  filter: drop-shadow(0 0 24px rgba(231,84,128,0.35)) drop-shadow(0 6px 16px rgba(0,0,0,0.1));
+  mix-blend-mode: multiply;
+  filter: drop-shadow(0 4px 12px rgba(194,24,91,0.2));
   animation: floatImg 4s ease-in-out infinite;
   position: relative;
   z-index: 1;
