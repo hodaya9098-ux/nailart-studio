@@ -25,10 +25,27 @@ const services = [
   { name: "בניית ציפורניים", price: 180 }
 ];
 
+let nailQty = 1;
+
+function changeQty(delta) {
+  const check = document.getElementById("nailCompleteCheck");
+  nailQty = Math.min(10, Math.max(1, nailQty + delta));
+  document.getElementById("nailQty").textContent = nailQty;
+  document.getElementById("nailCompletePrice").textContent = (nailQty * 10) + " ₪";
+  if (nailQty > 1) check.checked = true;
+  calcTotal();
+}
+
 function calcTotal() {
   const checkboxes = document.querySelectorAll('.calc-item input[type="checkbox"]:checked');
   let total = 0;
-  checkboxes.forEach(cb => total += parseInt(cb.value));
+  checkboxes.forEach(cb => {
+    if (cb.id === "nailCompleteCheck") {
+      total += nailQty * 10;
+    } else {
+      total += parseInt(cb.value);
+    }
+  });
   const el = document.getElementById("totalAmount");
   const box = document.getElementById("totalBox");
   if (el) {
@@ -40,6 +57,11 @@ function calcTotal() {
 
 function resetCalc() {
   document.querySelectorAll('.calc-item input[type="checkbox"]').forEach(cb => cb.checked = false);
+  nailQty = 1;
+  const qtyEl = document.getElementById("nailQty");
+  const priceEl = document.getElementById("nailCompletePrice");
+  if (qtyEl) qtyEl.textContent = "1";
+  if (priceEl) priceEl.textContent = "10 ₪";
   calcTotal();
 }
 

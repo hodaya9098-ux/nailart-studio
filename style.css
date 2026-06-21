@@ -423,6 +423,21 @@ body {
   transition:all 0.3s;
 }
 .calc-total-num { font-size:1.4rem; }
+.calc-item-qty { align-items:center; gap:10px; }
+.qty-controls {
+  display:flex; align-items:center; gap:8px;
+  background:#fff0f5; border-radius:20px; padding:4px 10px;
+}
+.qty-controls button {
+  background:#ff8fab; color:#fff; border:none;
+  width:24px; height:24px; border-radius:50%;
+  font-size:1rem; font-weight:700; cursor:pointer;
+  display:flex; align-items:center; justify-content:center;
+  transition:background 0.2s;
+}
+.qty-controls button:hover { background:#e75480; }
+.qty-controls span { font-weight:700; min-width:16px; text-align:center; color:#e75480; }
+
 .calc-reset-btn {
   background:none; border:2px solid #ffb3c6; color:#ff8fab;
   padding:8px 20px; border-radius:20px; cursor:pointer;

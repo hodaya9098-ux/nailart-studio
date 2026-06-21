@@ -31,7 +31,16 @@
         <label class="calc-item"><input type="checkbox" value="130" onchange="calcTotal()"><span>לק ג'ל ברגליים</span><span class="calc-price">130 ₪</span></label>
         <label class="calc-item"><input type="checkbox" value="180" onchange="calcTotal()"><span>בניית ציפורניים</span><span class="calc-price">180 ₪</span></label>
         <label class="calc-item"><input type="checkbox" value="300" onchange="calcTotal()"><span>בנייה חדשה</span><span class="calc-price">300–350 ₪</span></label>
-        <label class="calc-item"><input type="checkbox" value="10"  onchange="calcTotal()"><span>השלמת ציפורן</span><span class="calc-price">10 ₪</span></label>
+        <div class="calc-item calc-item-qty">
+          <input type="checkbox" id="nailCompleteCheck" onchange="calcTotal()">
+          <span>השלמת ציפורן</span>
+          <div class="qty-controls">
+            <button type="button" onclick="changeQty(-1)">−</button>
+            <span id="nailQty">1</span>
+            <button type="button" onclick="changeQty(1)">+</button>
+          </div>
+          <span class="calc-price" id="nailCompletePrice">10 ₪</span>
+        </div>
       </div>
 
       <div class="calc-group">
