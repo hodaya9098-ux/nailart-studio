@@ -1,3 +1,89 @@
+// ===== FIREBASE =====
+const firebaseConfig = {
+  apiKey: "AIzaSyBGGY8JSM0SxUsYkj4qEIFEMDMGwN0Ss_w",
+  authDomain: "inbalmoshe-37596.firebaseapp.com",
+  databaseURL: "https://inbalmoshe-37596-default-rtdb.firebaseio.com",
+  projectId: "inbalmoshe-37596",
+  storageBucket: "inbalmoshe-37596.firebasestorage.app",
+  messagingSenderId: "475050324020",
+  appId: "1:475050324020:web:006bfca2445621e8d3da61",
+  measurementId: "G-NE3RS6RTWV"
+};
+firebase.initializeApp(firebaseConfig);
+const db = firebase.database();
+
+// ===== Cache מקומי =====
+let cache = {
+  bookedSlots:  {},
+  workingDays:  [0, 1, 2, 3, 4],
+  blockedDates: []
+};
+let dbReady = false;
+
+function getBookedSlots()  { return cache.bookedSlots; }
+function getWorkingDays()  { return cache.workingDays; }
+function getBlockedDates() { return cache.blockedDates; }
+
+// טעינה ראשונית + האזנה לשינויים בזמן אמת
+db.ref("/").on("value", snap => {
+  const data = snap.val() || {};
+  cache.bookedSlots  = data.bookedSlots  || {};
+  cache.workingDays  = data.workingDays  || [0, 1, 2, 3, 4];
+  cache.blockedDates = data.blockedDates || [];
+
+  if (!dbReady) {
+    dbReady = true;
+    initCalendar();
+    if (document.getElementById("workingDaysGrid")) renderAdminPanel();
+  } else {
+    if (document.getElementById("calendarGrid")) renderCalendar();
+    if (document.getElementById("appointmentsList")) renderAppointmentsList();
+  }
+});
+
+function bookSlot(dateStr, time) {
+  if (!cache.bookedSlots[dateStr]) cache.bookedSlots[dateStr] = [];
+  cache.bookedSlots[dateStr].push(time);
+  db.ref("bookedSlots/" + dateStr).set(cache.bookedSlots[dateStr]);
+}
+
+function saveWorkingDays() {
+  const working = [];
+  document.querySelectorAll(".day-toggle").forEach((btn, i) => {
+    if (btn.classList.contains("active")) working.push(i);
+  });
+  cache.workingDays = working;
+  db.ref("workingDays").set(working);
+  const msg = document.getElementById("savedMsg");
+  if (msg) { msg.textContent = "ימי העבודה נשמרו!"; setTimeout(() => msg.textContent = "", 2500); }
+}
+
+function blockDate() {
+  const input = document.getElementById("blockDateInput");
+  const dateStr = input.value;
+  if (!dateStr) return;
+  if (!cache.blockedDates.includes(dateStr)) {
+    cache.blockedDates.push(dateStr);
+    db.ref("blockedDates").set(cache.blockedDates);
+    input.value = "";
+    renderBlockedList();
+  }
+}
+
+function unblockDate(dateStr) {
+  cache.blockedDates = cache.blockedDates.filter(d => d !== dateStr);
+  db.ref("blockedDates").set(cache.blockedDates);
+  renderBlockedList();
+}
+
+function clearAllAppointments() {
+  if (confirm("למחוק את כל התורים לצמיתות?")) {
+    cache.bookedSlots = {};
+    db.ref("bookedSlots").remove();
+    renderAppointmentsList();
+  }
+}
+
 // ===== תפריט נייד =====
 function toggleMenu() {
   document.querySelector(".nav-links").classList.toggle("open");
@@ -5,7 +91,7 @@ function toggleMenu() {
 
 // ===== סגנונות =====
 function selectStyle(style, card) {
-  document.querySelectorAll(".style-card, .style-card-new").forEach(c => c.classList.remove("selected"));
+  document.querySelectorAll(".style-card, .style-card-new, .swatch-card").forEach(c => c.classList.remove("selected"));
   card.classList.add("selected");
 
   const el = document.getElementById("chosenStyle");
@@ -19,12 +105,6 @@ function selectStyle(style, card) {
 }
 
 // ===== מחיר =====
-const services = [
-  { name: "מניקור בסיסי", price: 80 },
-  { name: "מניקור + לק ג'ל", price: 120 },
-  { name: "בניית ציפורניים", price: 180 }
-];
-
 let nailQty = 1;
 
 function changeQty(delta) {
@@ -67,22 +147,11 @@ function resetCalc() {
 
 function calcPrice() {}
 
-// ===== יומן - נתונים =====
+// ===== יומן =====
 const HOURS = ["09:00","10:00","11:00","12:00","14:00","15:00","16:00","17:00"];
 const ADMIN_PASSWORD = "1234";
 
 let currentYear, currentMonth, selectedDate = null, selectedTime = null;
-
-function getWorkingDays()  { return JSON.parse(localStorage.getItem("workingDays")  || "[0,1,2,3,4]"); }
-function getBlockedDates() { return JSON.parse(localStorage.getItem("blockedDates") || "[]"); }
-function getBookedSlots()  { return JSON.parse(localStorage.getItem("bookedSlots")  || "{}"); }
-
-function bookSlot(dateStr, time) {
-  const booked = getBookedSlots();
-  if (!booked[dateStr]) booked[dateStr] = [];
-  booked[dateStr].push(time);
-  localStorage.setItem("bookedSlots", JSON.stringify(booked));
-}
 
 function toDateStr(date) {
   return `${date.getFullYear()}-${String(date.getMonth()+1).padStart(2,"0")}-${String(date.getDate()).padStart(2,"0")}`;
@@ -105,7 +174,6 @@ function getDayStatus(date) {
   return "available";
 }
 
-// ===== יומן - תצוגה =====
 function initCalendar() {
   if (!document.getElementById("calendarGrid")) return;
   const now = new Date();
@@ -122,6 +190,7 @@ function changeMonth(dir) {
 }
 
 function renderCalendar() {
+  if (!document.getElementById("calMonthLabel")) return;
   const months = ["ינואר","פברואר","מרץ","אפריל","מאי","יוני","יולי","אוגוסט","ספטמבר","אוקטובר","נובמבר","דצמבר"];
   document.getElementById("calMonthLabel").textContent = `${months[currentMonth]} ${currentYear}`;
 
@@ -214,7 +283,6 @@ function sendAppointment(e) {
 
   bookSlot(selectedDate, selectedTime);
 
-  // בניית הודעת וואטסאפ
   let msg = `שלום! רציתי לאשר תור 💅\n`;
   msg += `━━━━━━━━━━━━━━\n`;
   msg += `👤 שם: ${name}\n`;
@@ -228,7 +296,6 @@ function sendAppointment(e) {
 
   const waURL = `https://wa.me/${COSMETICIAN_PHONE}?text=${encodeURIComponent(msg)}`;
 
-  // הצגת אישור
   confirmMsg.className = "confirm-msg";
   confirmMsg.innerHTML = `✅ מעולה <strong>${name}</strong>! עוד שנייה תועברי לוואטסאפ לאישור התור 💬`;
 
@@ -236,7 +303,6 @@ function sendAppointment(e) {
   selectedDate = null;
   selectedTime = null;
 
-  // פתיחת וואטסאפ אחרי שנייה
   setTimeout(() => window.open(waURL, "_blank"), 1200);
 
   setTimeout(() => {
@@ -286,34 +352,6 @@ function renderWorkingDays() {
   });
 }
 
-function saveWorkingDays() {
-  const working = [];
-  document.querySelectorAll(".day-toggle").forEach((btn, i) => {
-    if (btn.classList.contains("active")) working.push(i);
-  });
-  localStorage.setItem("workingDays", JSON.stringify(working));
-  const msg = document.getElementById("savedMsg");
-  if (msg) { msg.textContent = "ימי העבודה נשמרו!"; setTimeout(() => msg.textContent = "", 2500); }
-}
-
-function blockDate() {
-  const input = document.getElementById("blockDateInput");
-  const dateStr = input.value;
-  if (!dateStr) return;
-  const blocked = getBlockedDates();
-  if (!blocked.includes(dateStr)) {
-    blocked.push(dateStr);
-    localStorage.setItem("blockedDates", JSON.stringify(blocked));
-    input.value = "";
-    renderBlockedList();
-  }
-}
-
-function unblockDate(dateStr) {
-  localStorage.setItem("blockedDates", JSON.stringify(getBlockedDates().filter(d => d !== dateStr)));
-  renderBlockedList();
-}
-
 function renderBlockedList() {
   const blocked = getBlockedDates();
   const container = document.getElementById("blockedList");
@@ -338,13 +376,3 @@ function renderAppointmentsList() {
         `<div class="appt-item"><span>📅 ${toHebrewDate(date)}</span><span>🕐 ${time}</span></div>`
       ).join("");
 }
-
-function clearAllAppointments() {
-  if (confirm("למחוק את כל התורים לצמיתות?")) {
-    localStorage.removeItem("bookedSlots");
-    renderAppointmentsList();
-  }
-}
-
-// ===== אתחול =====
-initCalendar();
