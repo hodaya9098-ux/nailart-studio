@@ -387,6 +387,23 @@ body {
 .price-row:nth-child(even) { background: #fff5f9; }
 .price-name { font-weight: 600; }
 .price-val  { color: #e75480; font-weight: 700; }
+.footer-insta {
+  display: inline-block;
+  margin-top: 6px;
+  color: #ff8fab;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: color 0.2s;
+}
+.footer-insta:hover { color: #e75480; }
+
+.instagram-card {
+  background: linear-gradient(135deg, #f9ce34, #ee2a7b, #6228d7) !important;
+  color: #fff !important;
+}
+.instagram-card h3, .instagram-card p { color: #fff !important; }
+
 .price-cat-title {
   background: linear-gradient(135deg, #ff8fab, #ffb3c6);
   color: #fff;
